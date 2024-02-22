@@ -1,6 +1,6 @@
 import '../../../domain/models/dog_all_model.dart';
 
-abstract class DogAllBreedState {}
+abstract class DogAllBreedState<T> {}
 
 class DogAllBreedInitial extends DogAllBreedState {}
 

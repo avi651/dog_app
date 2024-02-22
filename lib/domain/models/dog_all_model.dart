@@ -7,19 +7,23 @@ String dogAllBreadModelToJson(DogAllBreedModel data) =>
     json.encode(data.toJson());
 
 class DogAllBreedModel {
+  final int? id;
   final Map<String, List<String>>? message;
   final String? status;
 
   DogAllBreedModel({
+    this.id,
     this.message,
     this.status,
   });
 
   DogAllBreedModel copyWith({
+    int? id,
     Map<String, List<String>>? message,
     String? status,
   }) =>
       DogAllBreedModel(
+        id: id ?? this.id,
         message: message ?? this.message,
         status: status ?? this.status,
       );
