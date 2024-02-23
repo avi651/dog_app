@@ -1,4 +1,3 @@
-import 'package:dog_app/domain/models/dog_all_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/usecases/dog_all_use_case.dart';
 import 'all_dog_event.dart';
@@ -16,13 +15,6 @@ class DogAllBreedBloc extends Bloc<AllDogBreedEvent, DogAllBreedState> {
             (failure) => emit(DogAllBreedError(failure.toString())),
             (allDogBreed) => emit(DogAllBreedLoaded(allDogBreed)));
       },
-    );
-  }
-
-  List<DogAllBreedModel> _placeholderData() {
-    return List.generate(
-      10,
-      (index) => DogAllBreedModel(id: index, status: "Fake Name"),
     );
   }
 }

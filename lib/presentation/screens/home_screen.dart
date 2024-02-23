@@ -1,12 +1,15 @@
 import 'package:dog_app/domain/models/dog_all_model.dart';
-import 'package:dog_app/presentation/screens/shimmer_item.dart';
-import 'package:dog_app/presentation/screens/userlist.dart';
+
+import 'package:dog_app/presentation/widgets/skleton_all_dog_list.dart';
+import 'package:dog_app/presentation/widgets/all_dog_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../core/components/base_app_bar.dart';
 import '../bloc/all_dog_bloc/all_dog_bloc.dart';
 import '../bloc/all_dog_bloc/all_dog_state.dart';
+import 'all_dog_image_list.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,19 +17,46 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: BaseAppBar(
+        title: const Text('Dog App'),
+        appBar: AppBar(),
+        widgets: const <Widget>[Icon(Icons.more_vert)],
+      ),
       body: BlocBuilder<DogAllBreedBloc, DogAllBreedState>(
         builder: (context, state) {
           if (state is DogAllBreedInitial) {
-            return ShimmerItem();
+            return Skeletonizer(
+              child: SkletonAllDogList(
+                dogAllBreedModel: DogAllBreedModel(),
+              ),
+            );
           }
           if (state is DogAllBreedLoading) {
-            return ShimmerItem();
+            return Skeletonizer(
+              child: SkletonAllDogList(
+                dogAllBreedModel: DogAllBreedModel(),
+              ),
+            );
           } else if (state is DogAllBreedLoaded) {
-            return ShimmerItem();
-            //return Text(
-            //    state.allDogBreed.elementAt(0).message!.keys.elementAt(10));
+            return Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: double.infinity,
+                  child: AllDogListView(dogAllBreedModel: state.allDogBreed),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  height: double.infinity,
+                  child: const AllDogImageListView(),
+                ),
+                // const AllDogImageListView(),
+              ],
+            );
           } else if (state is DogAllBreedError) {
-            return Text(state.message);
+            return Center(
+              child: Text(state.message),
+            );
           }
           return Container();
         },

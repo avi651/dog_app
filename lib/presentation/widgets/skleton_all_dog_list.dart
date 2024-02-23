@@ -1,8 +1,8 @@
 import 'package:dog_app/domain/models/dog_all_model.dart';
 import 'package:flutter/material.dart';
 
-class UserList extends StatelessWidget {
-  const UserList({super.key, required this.dogAllBreedModel});
+class SkletonAllDogList extends StatelessWidget {
+  const SkletonAllDogList({super.key, required this.dogAllBreedModel});
 
   final DogAllBreedModel dogAllBreedModel;
 
@@ -13,13 +13,8 @@ class UserList extends StatelessWidget {
       itemCount: dogAllBreedModel.message?.length,
       itemBuilder: (context, index) {
         return const Card(
-          child: ListTile(
-            leading: CircleAvatar(
-              child: Text("Hello"),
-            ),
-            title: Text("Hello"),
-            subtitle: Text("Hello"),
-          ),
+          child: Text(
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
         );
       },
     );
