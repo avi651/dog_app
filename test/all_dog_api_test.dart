@@ -26,10 +26,8 @@ void main() {
     // arrange
     when(mockHttpClient.get(Uri.parse(tUrl)))
         .thenAnswer((_) async => http.Response(testApiResponse, 200));
-
     // act
     await dogRemoteDataSource.getAllDogBreedData();
-
     // assert
     verify(mockHttpClient.get(Uri.parse(tUrl)));
   });
