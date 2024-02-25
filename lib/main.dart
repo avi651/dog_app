@@ -4,6 +4,7 @@ import 'injector_container.dart';
 import 'presentation/bloc/all_dog_bloc/all_dog_bloc.dart';
 import 'presentation/bloc/all_dog_bloc/all_dog_event.dart';
 import 'presentation/bloc/all_dog_image_bloc/all_dog_image_bloc.dart';
+import 'presentation/bloc/all_dog_image_sqlite_bloc/all_dog_image_bloc.dart';
 import 'presentation/screens/home_screen.dart';
 
 void main() {
@@ -28,6 +29,9 @@ class DogApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => getIt<DogAllBreedImageBloc>(),
+          ),
+          BlocProvider(
+            create: (context) => getIt<AllDogImageBloc>(),
           ),
         ],
         child: const HomeScreen(),

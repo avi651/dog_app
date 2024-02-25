@@ -9,19 +9,23 @@ String dogBreedImageModelToJson(DogBreedImageModel data) =>
 class DogBreedImageModel {
   final List<String>? message;
   final String? status;
+  bool? isSelected = false;
 
   DogBreedImageModel({
     this.message,
     this.status,
+    this.isSelected,
   });
 
   DogBreedImageModel copyWith({
     List<String>? message,
     String? status,
+    bool? isSelected,
   }) =>
       DogBreedImageModel(
         message: message ?? this.message,
         status: status ?? this.status,
+        isSelected: isSelected ?? this.isSelected,
       );
 
   factory DogBreedImageModel.fromJson(Map<String, dynamic> json) =>

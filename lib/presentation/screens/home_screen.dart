@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../core/components/base_app_bar.dart';
+import '../../core/components/like_images_bar.dart';
 import '../bloc/all_dog_bloc/all_dog_bloc.dart';
 import '../bloc/all_dog_bloc/all_dog_state.dart';
 import 'all_dog_image_list.dart';
@@ -20,7 +21,6 @@ class HomeScreen extends StatelessWidget {
       appBar: BaseAppBar(
         title: const Text('Dog App'),
         appBar: AppBar(),
-        widgets: const <Widget>[Icon(Icons.more_vert)],
       ),
       body: BlocBuilder<DogAllBreedBloc, DogAllBreedState>(
         builder: (context, state) {
@@ -47,10 +47,20 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.7,
-                  height: double.infinity,
-                  child: const AllDogImageListView(),
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.1 - 2,
+                        child: const LikeImagesBar(),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: const AllDogImageListView(),
+                      ),
+                    ],
+                  ),
                 ),
-                // const AllDogImageListView(),
               ],
             );
           } else if (state is DogAllBreedError) {

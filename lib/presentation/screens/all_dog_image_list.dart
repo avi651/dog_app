@@ -5,6 +5,7 @@ import 'package:dog_app/domain/models/dog_all_model.dart';
 import 'package:dog_app/presentation/widgets/skleton_all_dog_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:like_button/like_button.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -12,15 +13,20 @@ import '../../core/components/vertical_list_view.dart';
 import '../bloc/all_dog_image_bloc/all_dog_image_bloc.dart';
 import '../bloc/all_dog_image_bloc/all_dog_image_state.dart';
 
-class AllDogImageListView extends StatelessWidget {
+class AllDogImageListView extends StatefulWidget {
   const AllDogImageListView({super.key});
 
+  @override
+  State<AllDogImageListView> createState() => _AllDogImageListViewState();
+}
+
+class _AllDogImageListViewState extends State<AllDogImageListView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DogAllBreedImageBloc, DogAllBreedImageState>(
       builder: (context, state) {
         if (state is DogAllBreedImageInitial) {
-          return Center(
+          return const Center(
             child: Text("No Image"),
           );
         }
@@ -35,7 +41,6 @@ class AllDogImageListView extends StatelessWidget {
             itemCount: state.allDogImageBreed[0].message!.length,
             itemBuilder: (context, index) {
               var img = state.allDogImageBreed[0].message![index];
-              print("The Image is-> $img");
               return Card(
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.8,
@@ -45,39 +50,49 @@ class AllDogImageListView extends StatelessWidget {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(AppPadding.p20),
-                    child: CachedNetworkImage(
-                      imageUrl: img,
-                      fit: BoxFit.cover,
-                      placeholder: (_, __) => Shimmer.fromColors(
-                        baseColor: Colors.grey[850]!,
-                        highlightColor: Colors.grey[800]!,
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.8,
-                          color: Colors.black26,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            state.allDogImageBreed[0].isSelected =
+                                !state.allDogImageBreed[0].isSelected!;
+                          },
+                          child: CachedNetworkImage(
+                            imageUrl: img,
+                            fit: BoxFit.fill,
+                            placeholder: (_, __) => Shimmer.fromColors(
+                              baseColor: Colors.grey[850]!,
+                              highlightColor: Colors.grey[800]!,
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.8,
+                                color: Colors.black26,
+                              ),
+                            ),
+                            errorWidget: (_, __, ___) => const Icon(
+                              Icons.error,
+                              color: AppColors.redColor,
+                            ),
+                          ),
                         ),
-                      ),
-                      errorWidget: (_, __, ___) => const Icon(
-                        Icons.error,
-                        color: Colors.red,
-                      ),
+                        LikeButton(
+                          size: 80,
+                          likeBuilder: (bool isLiked) {
+                            return Icon(
+                              Icons.favorite,
+                              color: isLiked
+                                  ? AppColors.redColor
+                                  : Colors.transparent,
+                              size: 80,
+                            );
+                          },
+                        )
+                      ],
                     ),
-                    /*child: Text(
-                      state.allDogImageBreed[0].message![index],
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 15.0,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),*/
                   ),
                 ),
               );
-              /*return SizedBox(
-                width: 20,
-                child: Text(state.allDogImageBreed[0].message![index]),
-              );*/
             },
             addEvent: () {},
           );

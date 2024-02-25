@@ -14,7 +14,7 @@ class DogRemoteDataSourceImpl implements DogRemoteDataSource {
   @override
   Future<List<DogAllBreedModel>> getAllDogBreedData() async {
     final response = await client.get(
-      Uri.parse("https://dog.ceo/api/breeds/list/all"),
+      Uri.parse(ApiConstants.allDogCeoAPI),
     );
     if (response.statusCode == 200) {
       final convertDataToJson = json.decode("[${response.body}]");
@@ -29,7 +29,7 @@ class DogRemoteDataSourceImpl implements DogRemoteDataSource {
   Future<List<DogBreedImageModel>> getAllDogBreedImageData(
       String dogImageName) async {
     final response = await client.get(
-      Uri.parse("https://dog.ceo/api/breed/african/images/random/10"),
+      Uri.parse(ApiConstants.allDogTopTenRandomImageAPI),
     );
     if (response.statusCode == 200) {
       final convertDataToJson = json.decode("[${response.body}]");

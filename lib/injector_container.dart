@@ -1,3 +1,4 @@
+import 'package:dog_app/presentation/bloc/all_dog_image_sqlite_bloc/all_dog_image_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,6 +17,7 @@ void dependencyInjection() {
   // Bloc
   getIt.registerFactory(() => DogAllBreedBloc(dogAllUseCase: getIt()));
   getIt.registerFactory(() => DogAllBreedImageBloc(dogAllUseCase: getIt()));
+  getIt.registerFactory(() => AllDogImageBloc());
   // Use cases
   getIt.registerLazySingleton(() => DogAllUseCase(getIt()));
   getIt.registerLazySingleton(() => SearchAllDogImageUseCase(getIt()));
@@ -28,6 +30,3 @@ void dependencyInjection() {
   // Http service
   getIt.registerLazySingleton(() => http.Client());
 }
-
-  //return Text(
-            //    state.allDogBreed.elementAt(0).message!.keys.elementAt(10));
